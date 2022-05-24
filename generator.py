@@ -1,5 +1,6 @@
 import random
 import math
+
 def generall(n):
     G=(2*n)+1
     One=[]
@@ -57,6 +58,7 @@ def generall(n):
             gun2.append(gunTemper)
             gun.clear()
     return gun2
+
 def genny(n):
     G=(2*n)+1
     One=[]
@@ -67,13 +69,9 @@ def genny(n):
         One.append(str(g))
         f=str(c)+'p'
         One.append(str(f))
-        Two.append(str(g))
-        Two.append(str(f))
         c=c+1
     One.remove('0p')
-    Two.remove('0p')
     One.remove('00')
-    Two.remove('00')
     chunkii=[]
     for x in range(0, len(One), 2):
         chunkii.append(One[x:x+2])
