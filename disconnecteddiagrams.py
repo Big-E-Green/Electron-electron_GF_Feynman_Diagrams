@@ -24,66 +24,55 @@ cheeko=genny(2)
 ARRAY=PLX.copy()
 full=[]
 
-def reachzero(start,i):
+def reachzero(start,array):
     c=0
     hold=[]
-    while len(i)!=0:
+    RAY=array.copy()
+    while len(RAY)!=0:
         c=c+1
-        for k in i:
+        for k in RAY:
             if k[0]==start:
-                print(k)
                 start=k[1]
                 hold.append(k)
-                i.remove(k)
+                RAY.remove(k)
                 if k[1]=='00':
-                    i=[]
+                    RAY=[]
                     return True, hold
             if c>10:
                 i=[]
                 return False, hold
-def loopcheck(start,i,end):
+            
+def loopcheck(var,i):
     c=0
     hold=[]
     while len(i)!=0:
         c=c+1
+        tmp=var
         for k in i:
-            if k[1] and k[0]!='00':
-                if k[1]==start:
-                    print(k)
-                    start=k[0]
-                    hold.append(k)
-                    i.remove(k)
-                    if k[1]==end:
-                        i=[]
-                        return True, hold
-                    if start[1]==end[0]:
-                        hold.append(k)
-                        i=[]
-                        return True, hold
-                if c>10:
-                    i=[]
-                    return False, hold
-            
-    
+            if k[0]==tmp:
+                tmp=k[1]
+                if k[0]==k[1]:
+                    return True, print('small loop')
+                if k[1]==var:
+                    return True, print('big loop')
+            if c>10:
+                i=[]
+                return False, hold
 #for i in ARRAY:
-#    input()
-#    print(i)
-#    print(loopcheck('1p',i,'1p'))
+ #   input()
+  #  print(i)
+   # print(reachzero('1p',i))
 
 
 
 for i in ARRAY:
     input()
     print(i)
-    ray=i
-    ARR=ray.copy()
-    c=0
-    true=0
     for x in cheeko:
         for j in x:
-            print(j,'jay')
-            print(reachzero(j,i),'zero')
-            #print(loopcheck(j,i,j),'loop')
+            print(j)
+            #print(reachzero(j,i),'zero')           
+            print(loopcheck(j,i))
 
 
                 
