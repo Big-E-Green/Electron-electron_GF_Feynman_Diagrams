@@ -23,60 +23,70 @@ cheeko=genny(2)
 
 ARRAY=PLX.copy()
 full=[]
-disconnnn=[]
+
+def reachzero(start,i):
+    c=0
+    hold=[]
+    while len(i)!=0:
+        c=c+1
+        for k in i:
+            if k[0]==start:
+                print(k)
+                start=k[1]
+                hold.append(k)
+                i.remove(k)
+                if k[1]=='00':
+                    i=[]
+                    return True, hold
+            if c>10:
+                i=[]
+                return False, hold
+def loopcheck(start,i,end):
+    c=0
+    hold=[]
+    while len(i)!=0:
+        c=c+1
+        for k in i:
+            if k[1] and k[0]!='00':
+                if k[1]==start:
+                    print(k)
+                    start=k[0]
+                    hold.append(k)
+                    i.remove(k)
+                    if k[1]==end:
+                        i=[]
+                        return True, hold
+                    if start[1]==end[0]:
+                        hold.append(k)
+                        i=[]
+                        return True, hold
+                if c>10:
+                    i=[]
+                    return False, hold
+            
+    
+#for i in ARRAY:
+#    input()
+#    print(i)
+#    print(loopcheck('1p',i,'1p'))
+
+
+
 for i in ARRAY:
-    Truth=0
     input()
     print(i)
     ray=i
     ARR=ray.copy()
-    coun=0
-    finall=0
-    kile=[]
-    tmp3=''
-    while finall!=1:
-        coun=coun+1
-        if coun>30:
-                print('                                FAILED')
-                finall=finall+1
-        for k in ARR:
-            print(k)           
-            
-            if k[0]=='00':
-                tmp=k[1]
-                ARR.remove(k)
-                for p in cheeko:
-                    coll=-2
-                    for z in p:
-                        coll=coll+1
-                        if tmp==z:
-                            tmp2=p[coll] 
-            if k[0]==tmp:
-                tmp=k[1]
-                ARR.remove(k)
-                if k[1]=='00':
-                    Truth=Truth+1
+    c=0
+    true=0
+    for x in cheeko:
+        for j in x:
+            print(j,'jay')
+            print(reachzero(j,i),'zero')
+            #print(loopcheck(j,i,j),'loop')
 
 
-            print(tmp2)       
-            if k[0]==tmp2:
-                if k[1]==tmp2:
-                    ARR.remove(k)
-                    Truth=Truth+1
-                    print('                           TRUE LOOP')
-            if k[0]==tmp2:
-                kile=tmp2
-                tmp3=k[1]
-                for i in cheeko:
-                    coll=-1
-                    for j in i:
-                        coll=coll+1
-                        if tmp2==j:
-                            tmp2=p[coll]
-
-            if tmp3==kile:
                 
-                print('TRUE')
             
             
 
