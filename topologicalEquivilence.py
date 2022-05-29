@@ -13,7 +13,7 @@ c=0
 cool=[]
 for i in lev:
     c=c+1
-    if c!=1:
+    if c>1:
         dunce=list(itertools.combinations(lev,c))
         cool.append(dunce)
 
@@ -54,7 +54,7 @@ for i in connn:
             while c!=len(k):
                 for q in k:
                     gens=reparam(q,tmp)
-                    tmp=gens
+                    tmp=gens                                    #removal of all higher order transformations
                     c=c+1
                     if c==len(k):
                         if gens in connn:
@@ -62,5 +62,15 @@ for i in connn:
                                 connn.remove(gens)
 print(connn)
 print(len(connn))
+
+con2=deepcopy(connn)
+for i in con2:
+    for j in lev:
+        gens=reparam(j,i)
+        if gens in con2:                                        #removal of len 1 transformations
+            if gens!=i:
+                con2.remove(gens)
+print(con2)
+print(len(con2))
 
 
