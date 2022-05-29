@@ -1,7 +1,5 @@
 from RemovingDisconnected import *
 from generator import *
-import random
-import math
 import itertools
 from copy import deepcopy
 
@@ -10,13 +8,14 @@ nums=[]
 for i in gen:
     for j in i:
         nums.append(j)
-#print(nums)
-
 lev=list(itertools.combinations(nums,2))
-#for i in lev:
-#    print(i)
-
-
+c=0
+cool=[]
+for i in lev:
+    c=c+1
+    if c!=1:
+        dunce=list(itertools.combinations(lev,c))
+        cool.append(dunce)
 
 def swap(translation):
     cc=[]
@@ -28,36 +27,40 @@ def swap(translation):
                 cc.append(c)
                 if len(cc)==2:
                     return cc
-#print(gen[1],'gen1')
-#print(swap(gen[0]))
+                
+def reparam(trans,inp):
+    c=-1
+    ii=deepcopy(inp)
+    for k in inp:
+        c=c+1
+        c2=-1
+        for q in k:
+            c2=c2+1
+            if q==trans[0]:        
+                ii[c][c2]=trans[1]
+            if q==trans[1]:
+                ii[c][c2]=trans[0]
+    sw=swap(trans)
+    ii[sw[0]],ii[sw[1]]=ii[sw[1]],ii[sw[0]]
+    return ii
 
 conn=connectedDiagrams(2)
-#print(conn)
-#print(len(conn))
+connn=deepcopy(conn)
+for i in connn:
+    tmp=i
+    for j in cool:
+        for k in j:
+            c=0
+            while c!=len(k):
+                for q in k:
+                    gens=reparam(q,tmp)
+                    tmp=gens
+                    c=c+1
+                    if c==len(k):
+                        if gens in connn:
+                            if gens!=i:
+                                connn.remove(gens)
+print(connn)
+print(len(connn))
 
 
-for i in conn:
-    c=-1
-    input()
-    print(i)
-
-    for j in lev:
-        print(j)
-        ii=deepcopy(i)
-        for k in i:
-            c=c+1
-            c2=-1
-            for q in k:
-                c2=c2+1
-                if q==j[0]:
-                    
-                    print(c,'TIME 1')
-                    print(c2,'TIME 2')
-                    
-                    ii[c][c2]=j[1]
-                if q==j[1]:
-                    print(c,'TIME 11')
-                    print(c2,'TIME 22')
-                    ii[c][c2]=j[0]
-                    
-    print(ii)
