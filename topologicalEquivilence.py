@@ -1,4 +1,4 @@
-from RemovingDisconnectedWIP import *
+from RemovingDisconnected import *
 from generator import *
 import itertools
 from copy import deepcopy
@@ -69,9 +69,6 @@ def distinctDiagrams(n):
                 if gens!=i:
                     con2.remove(gens)
     return con2
-
-print(len(distinctDiagrams(2)))
-print(distinctDiagrams(2))
 
 
 
