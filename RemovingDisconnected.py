@@ -1,4 +1,5 @@
 from generator import *
+from copy import deepcopy
 
 def connectedDiagrams(n):
     gun2=generall(n)
@@ -52,8 +53,20 @@ def connectedDiagrams(n):
                 if c>10:
                     i=[]
                     return False, hold
+    def closes(gamma,i,sig):
+        rho=gamma[1]
+        for j in rho:
+            for k in j:
+                c=0
+                while c<15:
+                    c=c+1
+                    for a in sigma:
+                        if k in a:
+                            c=17
+                        if c==13:
+                            return True
     connected=[]
-    for z in ARRAY:
+    for z in ARRAY:    
         sigma=cheeko.copy()
         i=z.copy()
         for x in cheeko:
@@ -64,28 +77,22 @@ def connectedDiagrams(n):
                 if len(arr)==2:
                     if True in arr:
                         sigma.remove(x)
-        for x in cheeko:
-            arr2=[]
-            arr3=[]
-            for j in x:
-                looper=loopcheck(j,i)
-                arr2.append(looper[0])
-                arr3.append(looper[1])
-                if len(arr2)==2:
-                    if arr2[0] and arr2[1]==True:
-                        for i in arr3:
-                            for j in i:
-                                for k in j:
-                                    for q in sigma:
-                                        if k not in q:
-                                            sigma.remove(x)
-                                
-        if len(sigma)==0:
-            connected.append(z)
+                        if len(sigma)==0:
+                            connected.append(z)
+
+        if len(sigma)!=0:
+            siggi=deepcopy(sigma)
+            for a in sigma:
+                tmp=[]
+                for j in a:
+                    gell=loopcheck(j,z)
+                    fin=closes(gell,i,sigma)
+                    if fin == True:        
+                        if a in siggi:
+                                siggi.remove(a)
+                                if len(siggi)==0:
+                                    connected.append(z)               
     return connected
-    
-
-
 
 
 
