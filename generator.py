@@ -4,19 +4,14 @@ import math
 def generall(n):
     G=(2*n)+1
     One=[]
-    Two=[]
     c=0
     while n>=c:
         g=str(c)+str(c)
         One.append(str(g))
         f=str(c)+'p'
         One.append(str(f))
-        Two.append(str(g))
-        Two.append(str(f))
         c=c+1
     One.remove('0p')
-    Two.remove('0p')
-
     FacG=math.factorial(G)
     LenG=2*((2*n)+1)
     b = ""
@@ -58,11 +53,9 @@ def generall(n):
             gun2.append(gunTemper)
             gun.clear()
     return gun2
-
 def genny(n):
     G=(2*n)+1
     One=[]
-    Two=[]
     c=0
     while n>=c:
         g=str(c)+str(c)
@@ -76,4 +69,3 @@ def genny(n):
     for x in range(0, len(One), 2):
         chunkii.append(One[x:x+2])
     return chunkii
-
