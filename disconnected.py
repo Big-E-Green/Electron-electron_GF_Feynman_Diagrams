@@ -1,23 +1,16 @@
 from generator import *
 from copy import deepcopy
+import timeit
 
 def connectedDiagrams(n):
-    gun2=generall(n)
+    s=timeit.default_timer()
+    gun2=all_diags(n)
     discon=[]
-    qweqwe=[]
     for i in gun2:
         for j in i:
             if j==['00', '00']:
                 discon.append(i)
     PLX=gun2.copy()
-    remmed=[]
-    firstsweep=[]
-    for i in gun2:
-        for j in discon:                    
-            if i==j:
-                PLX.remove(i)
-                remmed.append(i)
-                firstsweep.append(i)
     cheeko=genny(n)
     ARRAY=PLX.copy()
     def reachzero(start,array):
@@ -79,7 +72,6 @@ def connectedDiagrams(n):
                         sigma.remove(x)
                         if len(sigma)==0:
                             connected.append(z)
-
         if len(sigma)!=0:
             siggi=deepcopy(sigma)
             for a in sigma:
@@ -91,8 +83,7 @@ def connectedDiagrams(n):
                         if a in siggi:
                                 siggi.remove(a)
                                 if len(siggi)==0:
-                                    connected.append(z)               
+                                    connected.append(z)    
+    st=timeit.default_timer()
+    print('Time Disconected:',st-s)           
     return connected
-
-
-

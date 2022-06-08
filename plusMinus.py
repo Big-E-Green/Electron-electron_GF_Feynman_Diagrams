@@ -1,4 +1,5 @@
-from topologicalEquivilence import *
+from functions import *
+from topologicalInequiv import *
 from copy import deepcopy
 
 def posneg(n):
@@ -37,5 +38,3 @@ def posneg(n):
         final.append(posNeg[c])
         c=c+1
     return final
-
-        

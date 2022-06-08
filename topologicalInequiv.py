@@ -1,5 +1,5 @@
-from dd import *
-from generator2 import *
+from disconnected import *
+from generator import *
 from functions import *
 import itertools
 from copy import deepcopy
@@ -33,7 +33,6 @@ def reparam(trans,inp,numm):
     ii[sw[0]],ii[sw[1]]=ii[sw[1]],ii[sw[0]]
     return ii
 
-
 def distinctDiagrams(n):
     s=timeit.default_timer()
     gen=genny(n)
@@ -49,13 +48,75 @@ def distinctDiagrams(n):
         if c<2:
             dunce=list(itertools.combinations(lev,c))
             cool.append(dunce)
-    print(cool)
+    gell=[]
+    for i in gen:
+        for k in lev:
+            if i[0] in k:
+                if i[1] in k:
+                    gell.append(k)
+                    print(k)
+    amm=list(itertools.combinations(gell,2))
+    colin=list(itertools.combinations(gell,3))
+    print(colin)
+    print(amm)
+    coot=[]
+    genn=deepcopy(gen)
+    c=0
+    for i in gen:
+        colo=[]
+        colo2=[]
+        c=c+1
+        if c==1:
+            for k in lev:
+                if i[0] in k:
+                    colo.append(k)
+                if i[1] in k:
+                    colo2.append(k)
+            for z in colo:
+                for a in genn:
+                    if z[0]==a[0]:
+                        if z[1]==a[1]:
+                            if z in colo:
+                                colo.remove(z)
+            for z in colo2:
+                for a in genn:
+                    if z[0]==a[0]:
+                        if z[1]==a[1]:
+                            if z in colo2:
+                                colo2.remove(z)
+            coot.append(colo)
+            coot.append(colo2)
+    disso=[]
+    for i in coot:
+        for j in i:
+            if j not in disso:
+                disso.append(j)
+    dett=list(itertools.combinations(disso,2))
+    for i in dett:
+        if i[1][0]==i[0][0]:
+            dett.remove(i)
+    smash=[]
+    for k in lev:
+        for i in dett:
+            too=[]
+            for j in i:
+                too.append(j)
+                if len(too)==len(i):
+                    too.append(k)
+                    smash.append(too)
+    cool.append(amm)
+    #cool.append(colin)
+    cool.append(dett)
+    cool.append(smash)
     conn=connectedDiagrams(n)
     connn=deepcopy(conn)
+    #ce=0
     for i in connn:
-        tmp=i
+        #cole=[]
         for j in cool:
             for k in j:
+                tmp=i
+                orig=i
                 c=0
                 while c!=len(k):
                     for q in k:
@@ -64,17 +125,15 @@ def distinctDiagrams(n):
                         c=c+1
                         if c==len(k):
                             if gens in connn:
-                                if gens!=i:
+                                if gens!=orig:
                                     connn.remove(gens)
-    con2=deepcopy(connn)
-    for i in con2:
-        for j in lev:
-            gens=reparam(j,i,nums)
-            if gens in con2:                                        
-                if gens!=i:
-                    con2.remove(gens)
+                                    #print(k,ce)
+                                    #ce=ce+1
+                                    #cole.append(gens)
+        #print(len(cole))
     st=timeit.default_timer()
     print('Time Inequiv:',st-s)
-    return con2
-#print(distinctDiagrams(4))
-print(len(distinctDiagrams(2)))
+    return connn
+    
+#print(distinctDiagrams(2))
+print(len(distinctDiagrams(3)))

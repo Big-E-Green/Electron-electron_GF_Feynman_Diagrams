@@ -1,8 +1,7 @@
-import random
-import math
+from itertools import permutations
+import timeit
 
-def generall(n):
-    G=(2*n)+1
+def gen(n):
     One=[]
     c=0
     while n>=c:
@@ -12,47 +11,30 @@ def generall(n):
         One.append(str(f))
         c=c+1
     One.remove('0p')
-    FacG=math.factorial(G)
-    LenG=2*((2*n)+1)
-    b = ""
-    fin = []
-    bigB=[]
-    bGood = []    
-    while len(fin) < FacG:
-        aa=One.copy()
-        while len(b) < LenG:
-            x = random.choice(aa)
-            b += x
-            bigB.append(x)
-            aa.remove(x)
-        if b not in fin:
-            fin.append(b)
-            save = bigB.copy()
-            bGood.append(save)
-        b = ""
-        bigB.clear()
-    fin.sort()
-    bGood.sort()
-    bgood=[]
-    for i in bGood:
-        c=0
-        for j in i:
-            bgood.append(str(One[c]))
-            bgood.append(str(j))
+    return One
+
+def all_diags(n):
+    s=timeit.default_timer()
+    lst = gen(n)
+    perm = permutations(lst)
+    hmm=[]
+    for i in list(perm):
+        hmm.append(i)
+    fin=[]
+    for i in hmm:
+        c=-1
+        tmp2=[]
+        for k in gen(n):
             c=c+1
-        save=bgood.copy()
-    chunki=[]
-    for x in range(0, len(save), 2):
-        chunki.append(save[x:x+2])
-    gun = []
-    gun2 = []
-    for x in chunki:
-        gun.append(x)
-        if len(gun) == G:
-            gunTemper = gun.copy()
-            gun2.append(gunTemper)
-            gun.clear()
-    return gun2
+            tmp=[]
+            tmp.append(k)
+            tmp.append(i[c])
+            tmp2.append(tmp)
+        fin.append(tmp2)
+    st=timeit.default_timer()
+    print('Time Generator:',st-s)
+    return fin
+
 def genny(n):
     G=(2*n)+1
     One=[]
