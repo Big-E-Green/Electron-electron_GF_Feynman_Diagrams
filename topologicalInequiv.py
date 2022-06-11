@@ -82,9 +82,7 @@ def distinctDiagrams(n):
             pairs.append(tmp)
     pairs2=deepcopy(pairs)
     c=-1
-    pairCombs=[]    
-    for i in pairs:
-        print(i)                                          
+    pairCombs=[]                                             
     for i in pairs:
         c=c+1
         for j in i:
@@ -101,7 +99,6 @@ def distinctDiagrams(n):
                         temp.append(p)
                         tempT.append(temp)
             pairCombs.append(tempT)
-    print(gen)
     remm=[]
     for i in pairCombs:
         for j in i:
@@ -133,10 +130,10 @@ def distinctDiagrams(n):
         for j in i:
             if j not in tmp3:
                 tmp3.append(j)
-    for i in pairCombs:
-        print(i)
-        for j in i:
-            print(j)
+    #for i in pairCombs:
+     #   print(i)
+      #  for j in i:
+       #     print(j)
     pairCombs=tmp3
     cool.append(pairCombs)
     
