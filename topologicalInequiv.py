@@ -5,7 +5,6 @@ import itertools
 from copy import deepcopy
 import timeit
 
-
 def swap(translation,numm):
     cc=[]
     for i in translation: 
@@ -34,85 +33,146 @@ def reparam(trans,inp,numm):
     return ii
 
 def distinctDiagrams(n):
-    s=timeit.default_timer()
+    ss=timeit.default_timer()
     gen=genny(n)
     nums=[]
     for i in gen:
-        for j in i:
+        for j in i:                                              
             nums.append(j)
     lev=list(itertools.combinations(nums,2))
-    c=0
     cool=[]
-    for i in lev:
-        c=c+1
-        if c<2:
-            dunce=list(itertools.combinations(lev,c))
-            cool.append(dunce)
+
+    ##########################################################################
+    # k-k'
+
+    ktok=[]
     gell=[]
     for i in gen:
         for k in lev:
-            if i[0] in k:
+            if i[0] in k:                                           
                 if i[1] in k:
                     gell.append(k)
-                    print(k)
-    amm=list(itertools.combinations(gell,2))
-    colin=list(itertools.combinations(gell,3))
-    print(colin)
-    print(amm)
-    coot=[]
-    genn=deepcopy(gen)
+    combs=list(itertools.combinations(gell,1))
+    ktok.append(combs)
     c=0
-    for i in gen:
-        colo=[]
-        colo2=[]
+    for i in gell:
         c=c+1
-        if c==1:
-            for k in lev:
-                if i[0] in k:
-                    colo.append(k)
-                if i[1] in k:
-                    colo2.append(k)
-            for z in colo:
-                for a in genn:
-                    if z[0]==a[0]:
-                        if z[1]==a[1]:
-                            if z in colo:
-                                colo.remove(z)
-            for z in colo2:
-                for a in genn:
-                    if z[0]==a[0]:
-                        if z[1]==a[1]:
-                            if z in colo2:
-                                colo2.remove(z)
-            coot.append(colo)
-            coot.append(colo2)
-    disso=[]
-    for i in coot:
+        if c>1:
+            combs2=list(itertools.combinations(gell,c))
+            ktok.append(combs2)                             
+    kktok=deepcopy(ktok)
+    cool=ktok
+
+    ##########################################################################
+    # interaction pairs 
+
+    combos=deepcopy(lev)
+    for i in lev:
+        for j in gen:
+            if i[0]==j[0]:
+                if i[1]==j[1]:
+                    combos.remove(i)
+    pairs=[]
+    for i in gen:
         for j in i:
-            if j not in disso:
-                disso.append(j)
-    dett=list(itertools.combinations(disso,2))
-    for i in dett:
-        if i[1][0]==i[0][0]:
-            dett.remove(i)
-    smash=[]
-    for k in lev:
-        for i in dett:
-            too=[]
-            for j in i:
-                too.append(j)
-                if len(too)==len(i):
-                    too.append(k)
-                    smash.append(too)
-    cool.append(amm)
-    #cool.append(colin)
-    cool.append(dett)
-    cool.append(smash)
+            tmp=[]
+            for k in combos:
+                if j==k[0]:
+                    tmp.append(k)
+            pairs.append(tmp)
+    pairs2=deepcopy(pairs)
+    c=-1
+    pairCombs=[]    
+    for i in pairs:
+        print(i)                                          
+    for i in pairs:
+        c=c+1
+        for j in i:
+            tempT=[]
+            c2=-1
+            for k in pairs2:
+                c2=c2+1
+                if c2==c:
+                    c=c
+                else:
+                    for p in k:
+                        temp=[]
+                        temp.append(j)
+                        temp.append(p)
+                        tempT.append(temp)
+            pairCombs.append(tempT)
+    print(gen)
+    remm=[]
+    for i in pairCombs:
+        for j in i:
+            tetts=[]
+            for k in j:
+                tetts.append(k[0])
+                if len(tetts)==2:
+                    for h in gen:
+                        if tetts[0] in h:
+                            if tetts[1] in h:
+                                remm.append(j)
+    delec=[]
+    for i in remm:
+        tello=[]
+        tello.append(i)
+        delec.append(tello)
+    pairCombs=delec
+    for i in pairCombs:
+        for j in i:
+            tmp=[]
+            for k in j:
+                tmp.append(k[1])
+            if tmp[0]==tmp[1]:
+                for s in pairCombs:
+                    if j in s:
+                        s.remove(j)
+    tmp3=[]
+    for i in pairCombs:
+        for j in i:
+            if j not in tmp3:
+                tmp3.append(j)
+    for i in pairCombs:
+        print(i)
+        for j in i:
+            print(j)
+    pairCombs=tmp3
+    cool.append(pairCombs)
+    
+    ######################################################################
+    # for each k-k' pair swaps
+
+    combo=[]
+    for z in pairCombs:
+        tmp2=[]
+        smashh=[]
+        for l in z:
+            tmp2.append(l)
+            for i in kktok:      
+                for j in i:
+                    tmp=[]
+                    for q in j:
+                        tmp.append(q)
+                    smash=[]
+                    smash.append(tmp2)
+                    smash.append(tmp)
+                    smashh.append(smash)
+        for w in smashh:
+            ttmp=[]
+            for r in w:
+                for u in r:
+                    ttmp.append(u)
+            combo.append(ttmp)
+    cool.append(combo)
+
+    ######################################################################
+    # transforming each i by k-k', interact pairs, and k-k' + interact pairs
+
     conn=connectedDiagrams(n)
     connn=deepcopy(conn)
-    #ce=0
     for i in connn:
-        #cole=[]
+        sav=[]
         for j in cool:
             for k in j:
                 tmp=i
@@ -127,13 +187,11 @@ def distinctDiagrams(n):
                             if gens in connn:
                                 if gens!=orig:
                                     connn.remove(gens)
-                                    #print(k,ce)
-                                    #ce=ce+1
-                                    #cole.append(gens)
-        #print(len(cole))
+                                    sav.append(i)
+        #print(len(sav))
     st=timeit.default_timer()
-    print('Time Inequiv:',st-s)
+    print('Time Inequiv:',st-ss)
     return connn
-    
+
 #print(distinctDiagrams(2))
-print(len(distinctDiagrams(3)))
+print(len(distinctDiagrams(2)))
