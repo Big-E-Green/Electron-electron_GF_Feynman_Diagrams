@@ -41,10 +41,6 @@ def distinctDiagrams(n):
             nums.append(j)
     lev=list(itertools.combinations(nums,2))
     cool=[]
-
-    ##########################################################################
-    # k-k'
-
     ktok=[]
     gell=[]
     for i in gen:
@@ -62,10 +58,6 @@ def distinctDiagrams(n):
             ktok.append(combs2)                             
     kktok=deepcopy(ktok)
     cool=ktok
-
-    ##########################################################################
-    # interaction pairs 
-
     combos=deepcopy(lev)
     for i in lev:
         for j in gen:
@@ -130,18 +122,36 @@ def distinctDiagrams(n):
         for j in i:
             if j not in tmp3:
                 tmp3.append(j)
-    #for i in pairCombs:
-     #   print(i)
-      #  for j in i:
-       #     print(j)
-    pairCombs=tmp3
-    cool.append(pairCombs)
-    
-    ######################################################################
-    # for each k-k' pair swaps
-
+    tmpfin=[]
+    for i in pairCombs:
+        for j in i:
+            ttt=[]
+            for k in j:
+                ttt.append(k[1])
+                if len(ttt)==2:
+                    for g in gen:
+                        if ttt[0] in g:
+                            if ttt[1] in g:
+                                    tmpfin.append(j)
+    pairCombs=tmpfin
+    jj=deepcopy(pairCombs)
+    paired=[]
+    for i in pairCombs:
+        for k in jj:
+            if i[0][0]!=k[0][0]:
+                if i[1][0]!=k[0][0]:
+                    tmp=[]
+                    for a in i:
+                        tmp.append(a)
+                    for l in k:
+                        tmp.append(l)
+                    if tmp not in paired:
+                        paired.append(tmp)
+    for i in tmpfin:
+        paired.append(i)
+    cool.append(paired)
     combo=[]
-    for z in pairCombs:
+    for z in paired:
         tmp2=[]
         smashh=[]
         for l in z:
@@ -162,10 +172,6 @@ def distinctDiagrams(n):
                     ttmp.append(u)
             combo.append(ttmp)
     cool.append(combo)
-
-    ######################################################################
-    # transforming each i by k-k', interact pairs, and k-k' + interact pairs
-
     conn=connectedDiagrams(n)
     connn=deepcopy(conn)
     for i in connn:
@@ -185,10 +191,6 @@ def distinctDiagrams(n):
                                 if gens!=orig:
                                     connn.remove(gens)
                                     sav.append(i)
-        #print(len(sav))
     st=timeit.default_timer()
     print('Time Inequiv:',st-ss)
     return connn
-
-#print(distinctDiagrams(2))
-print(len(distinctDiagrams(2)))
