@@ -9,7 +9,7 @@ n=2
 diags=distinctDiagrams(n)
 interacts=genny(n)
 def main():
-    fig, axes = plt.subplots(figsize=(16,8), nrows=1, ncols=10,
+    fig, axes = plt.subplots(figsize=(16,8), nrows=1, ncols=len(diags),
                              subplot_kw=dict(aspect='equal', frameon=True),
                              sharex=True, sharey=True,
                             )
