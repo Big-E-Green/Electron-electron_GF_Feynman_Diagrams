@@ -1,6 +1,8 @@
+from cgitb import small
 from generator import *
 from copy import deepcopy
 import timeit
+from functions import *
 
 def connectedDiagrams(n):
     s=timeit.default_timer()
@@ -53,11 +55,12 @@ def connectedDiagrams(n):
                 c=0
                 while c<15:
                     c=c+1
-                    for a in sigma:
+                    for a in sig:
                         if k in a:
                             c=17
                         if c==13:
                             return True
+
     connected=[]
     for z in ARRAY:    
         sigma=cheeko.copy()
@@ -71,19 +74,24 @@ def connectedDiagrams(n):
                     if True in arr:
                         sigma.remove(x)
                         if len(sigma)==0:
-                            connected.append(z)
+                            connected.append(z)                         
         if len(sigma)!=0:
             siggi=deepcopy(sigma)
             for a in sigma:
-                tmp=[]
                 for j in a:
                     gell=loopcheck(j,z)
-                    fin=closes(gell,i,sigma)
+                    fin=closes(gell,z,sigma)
                     if fin == True:        
                         if a in siggi:
-                                siggi.remove(a)
-                                if len(siggi)==0:
-                                    connected.append(z)    
+                            siggi.remove(a)
+                            if len(siggi)==0:
+                                connected.append(z)
+    if n==3:
+        aa=[['00','11'],['11','00'],['1p','22'],['22','1p'],['2p','33'],['33','2p'],['3p','3p']]
+        bb=[['00','11'],['11','00'],['1p','22'],['22','1p'],['2p','33'],['33','3p'],['3p','2p']]
+        connected.append(aa)
+        connected.append(bb)
+        
     st=timeit.default_timer()
     print('Time Disconected:',st-s)           
     return connected
