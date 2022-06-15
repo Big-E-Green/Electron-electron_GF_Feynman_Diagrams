@@ -1,5 +1,9 @@
-# Greens Function Feynman Diagrams
+# Electron-electron Greens Function Feynman Diagrams
 
-With the application of Wick's theorem on a Green's function series, Feynman diagrams can be obtained. This code generates all possible permutations of a given Green's function and via Feynman rules reduces them to their connected, topologically inequivalent forms. With functionality extending to any order of correction (i.e. N = any real integer).
+In the interaction pictue, imposing a one-particle greens function for times a and b, expanding out and applying Wicks theorem, an expression can be obtained for the full greens function of the interaction. This full greens function depends on the correction 'n' and contains n! diagrams constituting the full greens function.
 
-This also includes the generation of these diagrams visually, for any given correction.
+From this expresson this code generates all possible diagrams for the given correction, removes all fully and partially disconnected diagrams, then reduces them into their topologically inequivalent forms, following the (2^n)*n! relation for number of topologically inequivalent diagrams.
+
+Given these topologically inequivilent connected diagrams, Feynman diagrams are then graphically generated, enabling us to see the Hartree terms and therefore the self-energies of the given diagrams.
+
+WARNING: given the relationship between the correction and number of diagrams generated is (2n+1)!, increasing increments of n take longer to poduces outputs.
