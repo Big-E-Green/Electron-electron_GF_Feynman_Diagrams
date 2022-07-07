@@ -13,20 +13,43 @@ def rev_slice(mylist):
     a = mylist[::-1]
     return a
 
+def on_line(inp,arr):
+    ret_arr=[]
+    tmp=[]
+    c=0
+    while len(arr)>0:
+        c=c+1
+        for i in arr:
+            if i[0]==inp:
+                tmp=i[1]
+                ret_arr.append(i)
+                if i[1]=='00':
+                    return True, ret_arr
+            if i[0]==tmp:
+                tmp=i[1]
+                ret_arr.append(i)
+                if i[1]=='00':
+                    ret_arr.remove(i)
+                    return True, ret_arr
+        if c>3:
+            return False, ret_arr
+
 def loops_path(init,arr):
     i1=init
     i2=rev_slice(init)
     sav_arr=[]
     c=0
     tmp=[]
+    ARR=deepcopy(arr)
     while len(i1)>0:
         c=c+1
-        for i in arr:
+        for i in ARR:
             a=i1[0]
             b=i1[1]
             if i[0]==a:
                 tmp=i[1]
                 sav_arr.append(i)
+                ARR.remove(i)
                 if i[0]==i[1]:
                     return False, sav_arr
                 if i[1]=='00':
@@ -47,22 +70,9 @@ def loops_path(init,arr):
             sav_arr=[]
             tmp=[]
 
-
-diags=distinctDiagrams(2)
-diags2=[]
-for i in diags:
-    ii=deepcopy(i)
-    for j in i:
-        if '00' in j:
-            ii.remove(j)
-    diags2.append(ii)
-Diags2=deepcopy(diags2)
-fock=genny(2)
-Fock=[]
-for i in fock:
-    Fock.append(i)
-    Fock.append(rev_slice(i))
-hartree=gen(2)
+n=2
+digs=distinctDiagrams(n)
+hartree=gen(n)
 hartree.remove('00')
 Hartree=[]
 for i in hartree:
@@ -70,13 +80,19 @@ for i in hartree:
     tmp.append(i)
     tmp.append(i)
     Hartree.append(tmp)
-c=-1
+fock=genny(n)
+Fock=[]
+for i in fock:
+    Fock.append(i)
+    Fock.append(rev_slice(i))
 
-for i in Diags2:
-    c=c+1
+bolo=genny(n)
+inters=genny(n)
+
+for i in digs:
     tmparr=[]
-    for k in genny(2):
-        zultan=loops_path(k,diags[c])
+    for k in bolo:
+        zultan=loops_path(k,i)
         tmparr.append(zultan[1])
     tmp2arr=[]
     tmp3arr=[]
@@ -90,34 +106,100 @@ for i in Diags2:
         for hp in o:
             for d in hp:
                 one.append(d)
-    remmed=[]
-    for j in fock:   
-        if j in i:
-            i.remove(j)
-            for u in j:
-                remmed.append(u)
-            for p in tmp2arr:
-                if j in p:
-                    i.append(j)
-                    for u in j:
-                        remmed.remove(u)
-    for g in Hartree:
-        if g in i:
-            cont=counterpart(g[0],fock)
-            if cont not in one:
-                i.remove(g)
-                remmed.append(cont)
-    for l in i:
-        ll=l
-        for f in remmed:
-            if f in l:
-                ll.remove(f)
-                if len(ll)==0:
-                    i.remove(l)
-Diagrams=deepcopy(Diags2)
-for i in Diags2:
-    if i==[]:
-        Diagrams.remove(i)
 
-for i in Diagrams:
-    print(i)
+    tmp_var_hartree=[]
+    for k in Hartree:
+        if k in i:
+            count=counterpart(k[0],inters)
+            line_check=on_line(count,i)
+            if line_check[0]==True:
+                if one==[]:  
+                    i.remove(k)
+                    tmp_var_hartree.append(count)
+                if one!=[]:
+                    if count not in one:
+                        i.remove(k)
+                        tmp_var_hartree.append(count)
+    
+    tmp_var_fock=[]
+    for o in Fock:
+        if o in i:
+            line_check=on_line(o[0],i)
+            if line_check[0]==True:
+                if one==[]:
+                    i.remove(o)
+                    tmp_var_fock.append(o)
+                if one!=[]:
+                    if o[1] not in one or o[0] not in one:
+                        i.remove(o)
+                        tmp_var_fock.append(o)
+    for j in tmp_var_hartree:
+        a=[]
+        b=[]
+        tmp_add=[]
+        tmp2=[]
+        for l in i:
+            if j==l[0]:
+                a=l[1] 
+                tmp2.append(l)
+            if j==l[1]:
+                b=l[0]
+                tmp2.append(l)
+            if a!=[] and b!=[]:
+                tmp=[]
+                tmp.append(b)
+                tmp.append(a)
+                tmp_add.append(tmp)
+                for p in tmp2:
+                    if p in i:
+                        i.remove(p) 
+        for h in tmp_add: 
+            i.append(h)
+    for f in tmp_var_fock:
+        A=[]
+        B=[]
+        fin_tmp=[]
+        tmp22=[]
+        for z in i:
+            if f[0]==z[1]:
+                A=z[0]
+                tmp22.append(z)
+            if f[1]==z[0]:
+                B=z[1]
+                tmp22.append(z)
+            if A!=[] and B!=[]:
+                tmp=[]
+                tmp.append(A)
+                tmp.append(B)
+                fin_tmp.append(tmp)
+                for q in tmp22:
+                    if q in i:
+                        i.remove(q)
+        for a in fin_tmp:
+            i.append(a)
+digg=[]
+inter=gen(n)
+for i in digs:
+    if i not in digg:
+        if ['00', '00'] not in i:
+            digg.append(i)
+
+diags=[]
+for i in digg:
+    tmp=[]
+    while len(i)>0:
+        for k in inter:
+            for l in i:
+                if l[0]==k:
+                    tmp.append(l)
+                    i.remove(l)
+                    if len(i)==0:
+                        diags.append(tmp)
+
+Digg=[]
+for i in diags:
+    if i not in Digg:
+        Digg.append(i)
+#for i in Digg:
+#    print(i)
+#print(len(Digg))

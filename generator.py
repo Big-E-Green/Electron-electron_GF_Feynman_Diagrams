@@ -36,7 +36,6 @@ def all_diags(n):
     return fin
 
 def genny(n):
-    G=(2*n)+1
     One=[]
     c=0
     while n>=c:
