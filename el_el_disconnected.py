@@ -1,7 +1,7 @@
 from el_el_generator import *
 from el_el_genFunctions import *
 
-def connected_check(inp):
+def connected_check(inp,n):
     for i in inp:
         if i==['00', '00']:
             return False 
@@ -70,13 +70,13 @@ def connected_check(inp):
     if len(direct_on_line)==len(inp):
         return True                
     return False
-connected=[]
-n=2
-for i in all_diagrams(n):
-    result=connected_check(i)
-    if result==True:
+#connected=[]
+#n=2
+#for i in all_diagrams(n):
+    #result=connected_check(i)
+   # if result==True:
         #print(i,'True')
-        connected.append(i)
+        #connected.append(i)
     #if result==False:
      #   print(i,'False')
-print(len(connected))
+#print(len(connected))
