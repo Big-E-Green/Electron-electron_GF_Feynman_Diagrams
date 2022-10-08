@@ -1,22 +1,12 @@
-def var_list2(n):
-    vars=[]
-    c=1
-    while n>=c:
-        g=str(c)+str(c)
-        vars.append(str(g))
-        f=str(c)+'p'
-        vars.append(str(f))
-        c+=1
-    return vars
+from copy import deepcopy
 
 def genall2(n):
     One=[]
     c=0
     while n>=c:
         g=str(c)+str(c)
-        One.append(str(g))
         f=str(c)+'p'
-        One.append(str(f))
+        One.extend([str(g),str(f)])
         c+=1
     One.remove('0p')
     One.remove('00')
@@ -80,3 +70,54 @@ def bigloopcheck(var,i):
             if c>10:
                 i=[]
                 return False, hold
+
+def var_list_one(n):
+    vars=[]
+    c=1
+    while n>=c:
+        g=str(c)+str(c)
+        f=str(c)+'p'
+        vars.extend([str(g),str(f)])
+        c+=1
+    return vars
+
+def pair_gen(n):
+    One=[]
+    c=1
+    while n>=c:
+        g=str(c)+str(c)
+        f=str(c)+'p'
+        One.extend([str(g),str(f)])
+        c+=1
+    chunked=[]
+    for x in range(0, len(One), 2):
+        chunked.append(One[x:x+2])
+    return chunked
+
+def swap(translation,numm):
+    cc=[]
+    for i in translation: 
+        c=0
+        for j in numm:
+            c+=1
+            if j==i:
+                cc.append(c)
+                if len(cc)==2:
+                    return cc
+                    
+def reparam(trans,inp,numm):   
+    ii=deepcopy(inp)
+    for i in trans:
+        c=-1
+        for k in ii:
+            c+=1
+            c2=-1
+            for q in k:
+                c2+=1
+                if q==i[0]:
+                    ii[c][c2]=i[1]      
+                if q==i[1]:
+                    ii[c][c2]=i[0]
+        sw=swap(i,numm)
+        ii[sw[0]],ii[sw[1]]=ii[sw[1]],ii[sw[0]]
+    return ii
