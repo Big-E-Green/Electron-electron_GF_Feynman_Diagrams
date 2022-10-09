@@ -70,13 +70,3 @@ def connected_check(inp,n):
     if len(direct_on_line)==len(inp):
         return True                
     return False
-#connected=[]
-#n=2
-#for i in all_diagrams(n):
-    #result=connected_check(i)
-   # if result==True:
-        #print(i,'True')
-        #connected.append(i)
-    #if result==False:
-     #   print(i,'False')
-#print(len(connected))
